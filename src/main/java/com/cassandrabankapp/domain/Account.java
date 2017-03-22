@@ -12,10 +12,10 @@ public class Account {
 	@PrimaryKeyColumn(name="accountNumber", type = PrimaryKeyType.PARTITIONED, ordinal = 0)
 	private String accountNumber;
 	
-	@Column
+	@Column("accounttype")
 	private String accountType;
 	
-	@Column
+	@Column("balance")
 	private double balance;
 
 	public Account() {

@@ -16,11 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cassandrabankapp.domain.Account;
 import com.cassandrabankapp.dto.AccountForm;
-import com.cassandrabankapp.repsoitory.AccountRepository;
+import com.cassandrabankapp.repository.AccountRepository;
 import com.cassandrabankapp.util.AccountMapper;
 
 @Controller
-@RequestMapping("/account")
+@RequestMapping("/admin/account")
 public class AccountController {
 	
 	@Autowired
@@ -43,7 +43,7 @@ public class AccountController {
 		return "account";
 	}
 	
-	@RequestMapping(value="/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String postAccountForm(@ModelAttribute("accountForm") @Valid AccountForm accountForm, BindingResult result) {
 		if(result.hasErrors())
 			return "account";
@@ -52,7 +52,7 @@ public class AccountController {
 		
 		accountRepository.save(account);
 		
-		return "redirect:/account";
+		return "redirect:/admin/account";
 	}
 	
 	@RequestMapping(value="/edit", method = RequestMethod.GET)
@@ -74,7 +74,7 @@ public class AccountController {
 		
 		accountRepository.save(account);
 		
-		return "redirect:/account";
+		return "redirect:/admin/account";
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -84,7 +84,7 @@ public class AccountController {
 		
 		accountRepository.delete(account);
 		
-		return "redirect:/account";		
+		return "redirect:/admin/account";		
 	}
 	
 }

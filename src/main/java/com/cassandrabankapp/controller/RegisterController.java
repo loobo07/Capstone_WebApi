@@ -2,6 +2,7 @@ package com.cassandrabankapp.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,12 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cassandrabankapp.dto.RegisterForm;
+import com.cassandrabankapp.service.MemberService;
 
 @Configuration
 @RequestMapping("/member")
 public class RegisterController {
 	
 	private static Logger logger = LoggerFactory.getLogger(RegisterController.class);
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String showRegistrationForm(Model model) {
@@ -31,6 +36,7 @@ public class RegisterController {
 		if(result.hasErrors())
 			return "register";
 		logger.info(registerForm.toString());
+		memberService.registerNewMember(registerForm);
 		return "redirect:/home";
 	}
 }

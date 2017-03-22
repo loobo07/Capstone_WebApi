@@ -46,7 +46,7 @@
 						<tr>
 							<td>${account.accountNumber}</td>
 							<td>${account.accountType}</td>
-							<td><a href="/account/edit?accountNumber=${watchlist.accountNumber}">Edit</a> | <a href="" onclick="deleteAccountNumber('account/delete?accountNumber=${watchlist.accountNumber}')">Delete</a></td>
+							<td><a href="/account/edit?accountNumber=${account.accountNumber}">Edit</a> | <a href="" onclick="deleteAccountNumber('account/delete?accountNumber=${account.accountNumber}')">Delete</a></td>
 						</tr>
 					</c:forEach>
 				</c:if>
