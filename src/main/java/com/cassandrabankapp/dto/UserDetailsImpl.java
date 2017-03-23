@@ -4,17 +4,24 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.cassandrabankapp.domain.Member;
 
 public class UserDetailsImpl implements UserDetails {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Member member;
 	
 	public UserDetailsImpl(Member member) {
 		this.member = member;
+	}
+
+	public UserDetailsImpl() {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -30,10 +37,6 @@ public class UserDetailsImpl implements UserDetails {
 		return member.getPassword();
 	}
 
-	@Override
-	public String getUsername() {
-		return member.getUsername();
-	}
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -53,6 +56,12 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return member.getUsername();
 	}
 	
 }

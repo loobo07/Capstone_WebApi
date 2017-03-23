@@ -22,11 +22,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/home",
 							"/error",
 							"/member/register",
-							"/forgotpassword",
-//							"/css/**",
-//							"/js/**",
-//							"/fonts/**",
-//							"**.html",
+							"/css/**",
+							"/js/**",
+							"/fonts/**",
+							"**.html",
 							"/static/**",
 							"/public/**").permitAll()
 				.antMatchers("/admin/**").hasRole("ADMIN")

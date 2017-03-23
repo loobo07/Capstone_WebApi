@@ -58,8 +58,6 @@
               </security:authorize>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>
-              <li><a href="../navbar-static-top/">Static top</a></li>
               <li><a href="?language=en">English</a></li>
               <li><a href="?language=es">Spanish</a></li>
             </ul>
