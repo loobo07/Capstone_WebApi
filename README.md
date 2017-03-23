@@ -7,11 +7,11 @@ This api is built using Spring MVC and uses Cassandra as the database.
 
 Inorder to get this working you will need to setup a Cassandra keyspace called "cassandrabankapp" as follows:
 
-Enter create keyspace cassandrabankapp WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 3}; within the cqlsh to create the keyspace.
+create keyspace cassandrabankapp WITH replication = {'class':'NetworkTopologyStrategy', 'datacenter1' : 3}; within the cqlsh to create the keyspace.
 
 Two tables have been made so far but may change based on querying, to make those tables in the cqlsh you enter:
 
-create table user (username text primary key, fullname text, email text, password text, accountNumber text);
+create table member (username text primary key, fullname text, email text, password text, accountNumber text);
 
 create table account (accountNumber text primary key, accountType text, balance double);
 
