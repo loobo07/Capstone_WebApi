@@ -13,6 +13,6 @@ public interface MemberRepository extends CassandraRepository<Member> {
 	public Member findByUsername(String username);
 
 	@Query("select * from member where accountNumber = ?0")
-	public List<Member> findByAccount(String accountNumber);
+	public List<Member> findByActive(String accountNumber);
 
 }

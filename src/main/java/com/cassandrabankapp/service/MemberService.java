@@ -3,9 +3,6 @@ package com.cassandrabankapp.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,7 +18,7 @@ import com.cassandrabankapp.dto.UserDetailsImpl;
 @Service
 public class MemberService implements UserDetailsService{
 
-private static Logger logger = LoggerFactory.getLogger(MemberService.class);
+private static Logger logger = LoggerFactory.getLogger(Member.class);
 	
 	@Autowired
 	private MemberRepository memberRepository;
@@ -47,16 +44,6 @@ private static Logger logger = LoggerFactory.getLogger(MemberService.class);
 		}
 	}
 	
-	public Member getCurrentMember() {
-		Member member = new Member();
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			String currentUserName = authentication.getName();
-			member = memberRepository.findByUsername(currentUserName);
-			return member;
-		}
-		return member;
-	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -68,4 +55,21 @@ private static Logger logger = LoggerFactory.getLogger(MemberService.class);
 	}
 	
 	
+	public boolean generateForgotPasswordBody(String username) {
+		Member member = memberRepository.findByUsername(username);
+		
+		StringBuilder line = new StringBuilder();
+		
+		if (member != null) {
+			line.append("Member: " + member.getFullname() + "\n\n");
+			line.append("Your password is: " + member.getPassword() + "\n\n");
+			line.append("CassandraWebTrader\n");
+			logger.info(line.toString());
+			//mailService.sendGenericMail(member.getEmail(), "CassandraWebTrader Forgot Password", line.toString());
+			return true;
+		} else {
+			logger.info("Member not found!");
+			return false;
+		}
+	}
 }
