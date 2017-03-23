@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,19 +39,37 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="$/home">Cassandra Bank App</a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/home">Cassandra Bank App</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="/home">Home</a></li>
-              <li><a href="/member/register">Register</a></li>
-              <li><a href="/account">Account</a></li>
+              <li class="active"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+              <security:authorize access="isAnonymous()">
+	              <li><a href="${pageContext.request.contextPath}/member/register">Register</a></li>
+	              <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
+              </security:authorize>
+              <security:authorize access="isAuthenticated()">
+	              <li>
+	              	<c:url var="logoutUrl" value="/logout" />
+	              	<form:form id="logoutForm" action="${logoutUrl}" method="post"></form:form>
+	              	<a href="#" onclick="document.getElementById('logoutForm').submit()">Logout</a>
+	              </li>
+	              <li><a href="${pageContext.request.contextPath}/account">Account</a></li>
+              </security:authorize>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+              <li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>
               <li><a href="../navbar-static-top/">Static top</a></li>
-
+              <li><a href="?language=en">English</a></li>
+              <li><a href="?language=es">Spanish</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
-	
+      
+      <c:if test="${not empty flashMessage}">
+      	<div class="alert alert-${flashType} alert-dismissable">
+      		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      		${flashMessage}
+      	</div>
+      </c:if>

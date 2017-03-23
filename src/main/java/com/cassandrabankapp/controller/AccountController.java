@@ -20,7 +20,7 @@ import com.cassandrabankapp.repository.AccountRepository;
 import com.cassandrabankapp.util.AccountMapper;
 
 @Controller
-@RequestMapping("/admin/account")
+@RequestMapping("/account")
 public class AccountController {
 	
 	@Autowired
@@ -52,7 +52,7 @@ public class AccountController {
 		
 		accountRepository.save(account);
 		
-		return "redirect:/admin/account";
+		return "redirect:/account";
 	}
 	
 	@RequestMapping(value="/edit", method = RequestMethod.GET)
@@ -74,7 +74,7 @@ public class AccountController {
 		
 		accountRepository.save(account);
 		
-		return "redirect:/admin/account";
+		return "redirect:/account";
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -84,7 +84,7 @@ public class AccountController {
 		
 		accountRepository.delete(account);
 		
-		return "redirect:/admin/account";		
+		return "redirect:/account";		
 	}
 	
 }

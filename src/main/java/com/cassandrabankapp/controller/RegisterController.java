@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cassandrabankapp.dto.RegisterForm;
 import com.cassandrabankapp.service.MemberService;
@@ -32,11 +33,15 @@ public class RegisterController {
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String postRegistrationForm(@ModelAttribute("registerForm") RegisterForm registerForm, BindingResult result) {
+	public String postRegistrationForm(@ModelAttribute("registerForm") RegisterForm registerForm, BindingResult result, RedirectAttributes redirectAttributes) {
 		if(result.hasErrors())
 			return "register";
 		logger.info(registerForm.toString());
 		memberService.registerNewMember(registerForm);
+		
+		redirectAttributes.addFlashAttribute("flashType", "success");
+		redirectAttributes.addFlashAttribute("flashMessage", "Registration successful.");
+		
 		return "redirect:/home";
 	}
 }
