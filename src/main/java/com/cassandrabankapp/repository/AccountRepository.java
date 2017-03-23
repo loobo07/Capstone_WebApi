@@ -10,4 +10,6 @@ public interface AccountRepository extends CassandraRepository<Account> {
 	@Query("select * from account where accountNumber=?0")
 	public Account findByAccountNumber(String accountNumber);
 
+	@Query("SELECT count(*) FROM account WHERE accountNumber=?0")
+	public int existingAccount(String accountNumber);
 }
