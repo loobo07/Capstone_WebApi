@@ -13,6 +13,6 @@ Two tables have been made so far but may change based on querying, to make those
 
 create table member (username text primary key, fullname text, email text, password text, accountNumber text);
 
-create table account (accountNumber text primary key, accountType text, balance double);
+create table account (accountNumber text primary key, balance double);
 
 That should get you set up and run the Spring boot project with Eclipe or Spring Tool Suite.
