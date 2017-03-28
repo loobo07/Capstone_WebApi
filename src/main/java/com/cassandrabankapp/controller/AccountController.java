@@ -37,12 +37,17 @@ public class AccountController {
 	public String showAccount(Model model) {
 		Member member = memberService.getCurrentMember();
 		Account account = accountRepository.findByAccountNumber(member.getAccountNumber());
+		
+		AccountForm accountForm = new AccountForm();
+		
 		model.addAttribute("account", account);
+		model.addAttribute("accountForm", accountForm);
+		
 		
 		return "account";
 	}
 	
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/withdraw", method = RequestMethod.POST)
 	public String postAccountForm(@ModelAttribute("accountForm") @Valid AccountForm accountForm, BindingResult result) {
 		if(result.hasErrors())
 			return "account";
