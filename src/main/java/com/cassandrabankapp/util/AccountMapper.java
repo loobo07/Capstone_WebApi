@@ -13,7 +13,6 @@ public class AccountMapper {
 		Account domain = new Account();
 		
 		domain.setAccountNumber(model.getAccountNumber());
-		domain.setAccountType(model.getAccountType());
 		domain.setBalance(model.getBalance());
 		
 		return domain;
@@ -23,7 +22,6 @@ public class AccountMapper {
 		AccountForm model = new AccountForm();
 		
 		model.setAccountNumber(domain.getAccountNumber());
-		model.setAccountType(domain.getAccountType());
 		model.setBalance(domain.getBalance());
 		
 		return model;

@@ -1,6 +1,5 @@
 package com.cassandrabankapp.controller;
 
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -15,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cassandrabankapp.domain.Account;
+import com.cassandrabankapp.domain.Member;
 import com.cassandrabankapp.dto.AccountForm;
 import com.cassandrabankapp.repository.AccountRepository;
+import com.cassandrabankapp.service.MemberService;
 import com.cassandrabankapp.util.AccountMapper;
 
 @Controller
@@ -27,18 +28,16 @@ public class AccountController {
 	private AccountRepository accountRepository;
 	
 	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
 	private AccountMapper mapper;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String showAccount(Model model) {
-		
-		List<Account> accounts = (List<Account>) accountRepository.findAll();
-		
-		model.addAttribute("accounts", accounts);
-		
-		AccountForm accountForm = new AccountForm();
-		
-		model.addAttribute("accountForm", accountForm);
+		Member member = memberService.getCurrentMember();
+		Account account = accountRepository.findByAccountNumber(member.getAccountNumber());
+		model.addAttribute("account", account);
 		
 		return "account";
 	}

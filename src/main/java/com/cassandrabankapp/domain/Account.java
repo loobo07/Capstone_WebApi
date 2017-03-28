@@ -12,22 +12,17 @@ public class Account {
 	@PrimaryKeyColumn(name="accountNumber", type = PrimaryKeyType.PARTITIONED, ordinal = 0)
 	private String accountNumber;
 	
-	@Column("accounttype")
-	private String accountType;
-	
 	@Column("balance")
 	private double balance;
 
 	public Account() {
 		super();
-		this.accountType="Checking";
 		this.balance=0.0;
 	}
 
-	public Account(String accountNumber, String accountType, double balance) {
+	public Account(String accountNumber, double balance) {
 		super();
 		this.accountNumber = accountNumber;
-		this.accountType = accountType;
 		this.balance = balance;
 	}
 
@@ -38,15 +33,7 @@ public class Account {
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
-
-	public String getAccountType() {
-		return accountType;
-	}
-
-	public void setAccountType(String accountType) {
-		this.accountType = accountType;
-	}
-
+	
 	public double getBalance() {
 		return balance;
 	}
@@ -60,7 +47,6 @@ public class Account {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((accountNumber == null) ? 0 : accountNumber.hashCode());
-		result = prime * result + ((accountType == null) ? 0 : accountType.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(balance);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -81,11 +67,6 @@ public class Account {
 				return false;
 		} else if (!accountNumber.equals(other.accountNumber))
 			return false;
-		if (accountType == null) {
-			if (other.accountType != null)
-				return false;
-		} else if (!accountType.equals(other.accountType))
-			return false;
 		if (Double.doubleToLongBits(balance) != Double.doubleToLongBits(other.balance))
 			return false;
 		return true;
@@ -93,7 +74,7 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "Account [accountNumber=" + accountNumber + ", accountType=" + accountType + ", balance=" + balance
+		return "Account [accountNumber=" + accountNumber + ", balance=" + balance
 				+ "]";
 	}
 	
