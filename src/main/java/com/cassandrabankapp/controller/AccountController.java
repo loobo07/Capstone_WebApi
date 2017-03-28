@@ -3,6 +3,8 @@ package com.cassandrabankapp.controller;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,19 +12,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.cassandrabankapp.domain.Account;
 import com.cassandrabankapp.domain.Member;
 import com.cassandrabankapp.dto.AccountForm;
 import com.cassandrabankapp.repository.AccountRepository;
 import com.cassandrabankapp.service.MemberService;
-import com.cassandrabankapp.util.AccountMapper;
 
 @Controller
 @RequestMapping("/account")
 public class AccountController {
+
+	private static Logger logger = LoggerFactory.getLogger(AccountController.class);
 	
 	@Autowired
 	private AccountRepository accountRepository;
@@ -30,65 +31,45 @@ public class AccountController {
 	@Autowired
 	private MemberService memberService;
 	
-	@Autowired
-	private AccountMapper mapper;
-	
 	@RequestMapping(method = RequestMethod.GET)
 	public String showAccount(Model model) {
 		Member member = memberService.getCurrentMember();
 		Account account = accountRepository.findByAccountNumber(member.getAccountNumber());
 		
-		AccountForm accountForm = new AccountForm();
-		
 		model.addAttribute("account", account);
-		model.addAttribute("accountForm", accountForm);
-		
+		model.addAttribute("accountForm",new AccountForm());
 		
 		return "account";
 	}
 	
 	@RequestMapping(value = "/withdraw", method = RequestMethod.POST)
 	public String postAccountForm(@ModelAttribute("accountForm") @Valid AccountForm accountForm, BindingResult result) {
-		if(result.hasErrors())
+		if(result.hasErrors()){
+			logger.info("ERROR: "+ result.toString());
 			return "account";
-		
-		Account account = mapper.map(accountForm);
-		
+		}
+		Member member = memberService.getCurrentMember();
+		Account account = accountRepository.findByAccountNumber(member.getAccountNumber());
+		double newBalance = account.getBalance() - accountForm.getBalance();
+		account.setBalance(newBalance);
+		logger.info("Current Bal: " + Double.toString(accountForm.getBalance()));
+		logger.info("Sub: " + Double.toString(newBalance));
 		accountRepository.save(account);
-		
 		return "redirect:/account";
 	}
 	
-	@RequestMapping(value="/edit", method = RequestMethod.GET)
-	public ModelAndView editAccountPage(@RequestParam(value = "accountNumber", required = true) String accountNumber) {
-		ModelAndView modelAndeView = new ModelAndView("account-edit");
-		
-		Account account = accountRepository.findByAccountNumber(accountNumber);
-		AccountForm accountForm = mapper.map(account);
-		modelAndeView.addObject(accountForm);
-		return modelAndeView;
-	}
-	
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String postAccountPage(@ModelAttribute("AccountForm") @Valid AccountForm accountForm, BindingResult result) {
+	@RequestMapping(value = "/deposit", method = RequestMethod.POST)
+	public String postAccountPage(@ModelAttribute("accountForm") @Valid AccountForm accountForm, BindingResult result) {
 		if (result.hasErrors())
-			return "account-edit";
-		
-		Account account = mapper.map(accountForm);
-		
+			return "account";
+		Member member = memberService.getCurrentMember();
+		Account account = accountRepository.findByAccountNumber(member.getAccountNumber());
+		double newBalance = account.getBalance() + accountForm.getBalance();
+		account.setBalance(newBalance);
+		logger.info("Current Bal: " + Double.toString(accountForm.getBalance()));
+		logger.info("Sum: " + Double.toString(newBalance));
 		accountRepository.save(account);
-		
 		return "redirect:/account";
-	}
-
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String deleteWatchlistPage(@RequestParam(value = "symbol", required = true) String accountNumber) {
-		Account account = new Account();
-		account.setAccountNumber(accountNumber);
-		
-		accountRepository.delete(account);
-		
-		return "redirect:/account";		
 	}
 	
 }

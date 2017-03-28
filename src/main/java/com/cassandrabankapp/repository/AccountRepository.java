@@ -12,4 +12,7 @@ public interface AccountRepository extends CassandraRepository<Account> {
 
 	@Query("SELECT count(*) FROM account WHERE accountNumber=?0")
 	public int existingAccount(String accountNumber);
+	
+	@Query("UPDATE account SET balance = ?0 WHERE accountNumber=?1")
+	public void updateBalance(double balance, String acountNumber);
 }

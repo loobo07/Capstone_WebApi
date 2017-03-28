@@ -2,11 +2,8 @@ package com.cassandrabankapp.dto;
 
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 public class AccountForm {
 
-	@NotEmpty
 	@Size(min = 1, max = 20)
 	private String accountNumber;
 	
