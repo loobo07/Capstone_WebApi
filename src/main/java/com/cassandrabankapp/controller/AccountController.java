@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cassandrabankapp.domain.Account;
 import com.cassandrabankapp.domain.Member;
@@ -43,7 +44,7 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value = "/withdraw", method = RequestMethod.POST)
-	public String postAccountForm(@ModelAttribute("accountForm") @Valid AccountForm accountForm, BindingResult result) {
+	public String postAccountForm(@ModelAttribute("accountForm") @Valid AccountForm accountForm, BindingResult result, RedirectAttributes redirectAttributes) {
 		if(result.hasErrors()){
 			logger.info("ERROR: "+ result.toString());
 			return "account";
@@ -54,7 +55,13 @@ public class AccountController {
 		account.setBalance(newBalance);
 		logger.info("Current Bal: " + Double.toString(accountForm.getBalance()));
 		logger.info("Sub: " + Double.toString(newBalance));
-		accountRepository.save(account);
+		if(newBalance >= 0 ){
+			accountRepository.save(account);
+		}
+		else {
+			redirectAttributes.addFlashAttribute("flashType", "error");
+			redirectAttributes.addFlashAttribute("flashMessage", "Not Enough money in bank!!");
+		}
 		return "redirect:/account";
 	}
 	
