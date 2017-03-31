@@ -11,8 +11,8 @@
 		<table class="table table-striped" id="account-table">
 			<thead>
 				<tr>
-					<th>accountNumber</th>
-					<th>balance</th>
+					<th>Account Number</th>
+					<th>Balance</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -31,11 +31,25 @@
 	</div>
 	<br/>
 	<div class="panel-body">
+		<form:form action="${pageContext.request.contextPath}/account/deposit" class="form" modelAttribute="accountForm" method="post" role="form">
+			
+			<div class="form-group">
+				<form:label path="balance">Deposit</form:label>
+				<form:input path="balance" class="form-control" />
+ 				<form:errors cssClass="error" path="balance" placeholder="Amount to Deposit"></form:errors>
+			</div>
+			
+			<div>
+				<button type="submit" class="btn btn-primary">Deposit</button>
+			</div>
+			
+		</form:form>
+		<br>
 		<form:form action="${pageContext.request.contextPath}/account/withdraw" class="form" modelAttribute="accountForm" method="post" role="form">
 			
 			<div class="form-group">
 				<form:label path="balance">Withdraw</form:label>
-				<form:input path="balance" class="form-control" />
+				<form:input path="balance" class="form-control" placeholder="Amount to withdraw"/>
 				<form:errors cssClass="error" path="balance"></form:errors>
 			</div>
 			
@@ -44,21 +58,6 @@
 			</div>
 			
 		</form:form>
-		<br>
-		<form:form action="${pageContext.request.contextPath}/account/deposit" class="form" modelAttribute="accountForm" method="post" role="form">
-			
-			<div class="form-group">
-				<form:label path="balance">Deposit</form:label>
-				<form:input path="balance" class="form-control" />
- 				<form:errors cssClass="error" path="balance"></form:errors>
-			</div>
-			
-			<div>
-				<button type="submit" class="btn btn-primary">Deposit</button>
-			</div>
-			
-		</form:form>
-		
 	</div>
 	
 </div>
