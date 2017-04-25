@@ -1,9 +1,12 @@
 package com.cassandrabankapp.dto;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CloudtestForm {
 
 	private String instanceID;
-	
+	private Map<String, String> instanceMap = new HashMap<String, String>();
 	
 	public CloudtestForm() {
 		super();
@@ -21,6 +24,14 @@ public class CloudtestForm {
 
 	public void setInstanceID(String instanceID) {
 		this.instanceID = instanceID;
+	}
+	
+	public Map<String, String> getInstanceMap() {
+		return instanceMap;
+	}
+
+	public void setInstanceMap(Map<String, String> instanceMap) {
+		this.instanceMap = instanceMap;
 	}
 
 	@Override

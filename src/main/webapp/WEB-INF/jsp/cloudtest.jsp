@@ -15,14 +15,14 @@
 					<th>Status</th>
 				</tr>
 			</thead>
-			<%-- <tbody>
-
-				<tr>
-					<td>${account.accountNumber}</td>
-					<td>${account.balance}</td>
-				</tr>
-
-			</tbody> --%>
+			<tbody>
+				<c:forEach items="${cloudtestForm.instanceMap}" var="instanceMap" varStatus="status">
+					<tr>
+						<td>${instanceMap.key}</td>
+						<td>${instanceMap.value}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
 		</table>
 
 	</div>

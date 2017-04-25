@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.amazonaws.regions.Regions;
@@ -38,18 +39,13 @@ public class CloudtestController {
 	private static Logger logger = LoggerFactory.getLogger(CloudtestController.class);
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String showInsances(Model model) {
+	public ModelAndView showInsances(Model model) {
 		CloudtestForm cloudtestForm = new CloudtestForm();
 		HashMap <String, String> instances = showInstances();
 		
-		for (Map.Entry m:instances.entrySet())
-	          System.out.println("Instance: " + m.getKey() + 
-	                             " -> Status: " + m.getValue());
+		cloudtestForm.setInstanceMap(instances);
 		
-		//model.addAttribute("account", account);
-		model.addAttribute("cloudtestForm",cloudtestForm);
-		
-		return "cloudtest";
+		return new ModelAndView("cloudtest" , "cloudtestForm" , cloudtestForm);
 	}
 	
 	@RequestMapping(value = "/start", method = RequestMethod.POST)
@@ -75,7 +71,7 @@ public class CloudtestController {
 		logger.info("Instance id : " + cloudtestForm.getInstanceID());
 		
 		stopInstance(cloudtestForm.getInstanceID());
-		redirectAttributes.addFlashAttribute("flashType", "failure");
+		redirectAttributes.addFlashAttribute("flashType", "success");
 		redirectAttributes.addFlashAttribute("flashMessage","Instance: " + cloudtestForm.getInstanceID() + " has been Stoped");
 		return "redirect:/cloudtest";
 	}
