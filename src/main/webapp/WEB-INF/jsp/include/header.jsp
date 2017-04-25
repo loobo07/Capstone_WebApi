@@ -49,20 +49,21 @@
 	              <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
               </security:authorize>
               <security:authorize access="isAuthenticated()">
+              	  <li><a href="${pageContext.request.contextPath}/account">Account</a></li>
+              	  <li><a href="${pageContext.request.contextPath}/cloudtest">Cloud Testing</a></li>
 	              <li>
 	              	<c:url var="logoutUrl" value="/logout" />
 	              	<form:form id="logoutForm" action="${logoutUrl}" method="post"></form:form>
 	              	<a href="#" onclick="document.getElementById('logoutForm').submit()">Logout</a>
 	              </li>
-	              <li><a href="${pageContext.request.contextPath}/account">Account</a></li>
               </security:authorize>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+           <!--  <ul class="nav navbar-nav navbar-right">
               <li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>
               <li><a href="../navbar-static-top/">Static top</a></li>
               <li><a href="?language=en">English</a></li>
               <li><a href="?language=es">Spanish</a></li>
-            </ul>
+            </ul> -->
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
