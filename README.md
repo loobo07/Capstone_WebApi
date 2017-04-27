@@ -5,6 +5,8 @@ This is a working prototype that will eventually have a simple bank api that all
 
 This api is built using Spring MVC and uses Cassandra as the database. 
 
+This api also has failure testing for aws instances and shows the user which instances are runnning and stopped
+
 Inorder to get this working you will need to setup a Cassandra keyspace called "cassandrabankapp" as follows:
 
 create keyspace cassandrabankapp WITH replication = {'class':'NetworkTopologyStrategy', 'datacenter1' : 3}; within the cqlsh to create the keyspace.
@@ -15,4 +17,4 @@ create table member (username text primary key, fullname text, email text, passw
 
 create table account (accountNumber text primary key, balance double);
 
-That should get you set up and run the Spring boot project with Eclipe or Spring Tool Suite.
+That should get you set up and run the Spring boot project with Spring Tool Suite (download at there site)
