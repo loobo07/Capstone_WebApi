@@ -15,9 +15,9 @@
 					<th>Status</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="refreshThis">
 				<c:forEach items="${cloudtestForm.instanceMap}" var="instanceMap" varStatus="status">
-					<tr>
+					<tr id = "${instanceMap.key}">
 						<td>${instanceMap.key}</td>
 						<td>${instanceMap.value}</td>
 					</tr>
@@ -62,5 +62,5 @@
 	</div>
 	
 </div>
-
+<script type="text/javascript" src="/js/polling.js"></script>
 <%@include file="include/footer.jsp" %>

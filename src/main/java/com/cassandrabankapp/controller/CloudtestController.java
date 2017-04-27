@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,6 +32,7 @@ import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.Reservation;
 
 import com.cassandrabankapp.dto.CloudtestForm;
+import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/cloudtest")
@@ -46,6 +48,17 @@ public class CloudtestController {
 		cloudtestForm.setInstanceMap(instances);
 		
 		return new ModelAndView("cloudtest" , "cloudtestForm" , cloudtestForm);
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	@ResponseBody
+	public String updateInsances() {
+		HashMap <String, String> instances = showInstances();
+		
+		Gson gson = new Gson(); 
+		String json = gson.toJson(instances);
+		
+		return json;
 	}
 	
 	@RequestMapping(value = "/start", method = RequestMethod.POST)

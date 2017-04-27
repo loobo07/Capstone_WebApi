@@ -16,10 +16,10 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
 	@Bean
 	public CassandraClusterFactoryBean cluster() {
 		CassandraClusterFactoryBean cluster = new CassandraClusterFactoryBean();
-		cluster.setContactPoints("34.223.208.50");
-		cluster.setContactPoints("52.90.138.94");
-		cluster.setContactPoints("35.165.48.22");
-		cluster.setContactPoints("52.207.107.111");
+		cluster.setContactPoints("52.24.133.0");
+		cluster.setContactPoints("54.148.178.63");
+		cluster.setContactPoints("54.89.250.10");
+		cluster.setContactPoints("54.237.246.209");
 		cluster.setPort(9042);
 		return cluster;
 	}
